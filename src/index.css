@@ -1,13 +1,63 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+*{
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+
+.company h6:hover{
+  background-color: black;
+  color: white;
+  cursor: pointer;
+}
+
+
+.maruti-cars{
+  display: none;
+
+}
+.maruti-cars li{
+  list-style: none;
+  background-color: #eee;
+  padding: 10px 20px ;
+  width: 100%;
+  border-radius: 10px;
+margin-bottom: 1rem;
+}
+
+.maruti-cars li:hover{
+  background-color: #ddd;
+}
+
+
+
+
+.maruti:hover .maruti-cars {
+  display: block;
+}
+
+
+
+.ford-cars{
+  display: none;
+
+}
+.ford-cars li{
+  list-style: none;
+  background-color: #eee;
+  padding: 10px 20px ;
+  width: 100%;
+  border-radius: 10px;
+margin-bottom: 1rem;
+}
+
+.ford-cars li:hover{
+  background-color: #ddd;
+}
+
+
+
+
+.ford:hover .ford-cars {
+  display: block;
 }
