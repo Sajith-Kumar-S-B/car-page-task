@@ -101,7 +101,7 @@ function Register({register}) {
            </label>}
           {isRegisterForm? <button type='submit' onClick={handleRegister} className='bg-dark rounded text-light p-2'>Signup</button>:<button type='submit' onClick={handleLogin} className='bg-dark rounded text-light p-2'>Login</button>}
            <div className='d-flex justify-content-between mt-2 align-items-center'>
-           {isRegisterForm? <p>Already Registered? <span><Link to={'/login'}>Login</Link> </span></p>: <p>Don't have an account? <span><Link to={'/register'}>Register</Link> </span></p>}
+           {isRegisterForm? <p>Already Registered? <span><Link to={'/login'}>Login</Link> </span></p>: <p>Don't have an account? <span><Link to={'/'}>Register</Link> </span></p>}
            </div>
             </div>
            
