@@ -6,16 +6,57 @@ function Register({register}) {
     const [userData,setUserData] = useState({
         username:"",email:"",password:"",phone:""
       })
+      const [isUsernameValid, setisUsernameValid] = useState(true);
+      const [isEmailValid, setisEmailValid] = useState(true);
+      const [isPasswordValid, setisPasswordValid] = useState(true);
+      const [isPhoneValid, setisPhoneValid] = useState(true);
+
       const navigate = useNavigate()
     const isRegisterForm = register?true:false
 
+
+
+    const handleChange = (e)=>{
+      const {name,value} = e.target
+      setUserData({...userData,[name]:value})
+
+      if (name === 'email') {
+        const isValidEmail = /^[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value);
+        setisEmailValid(isValidEmail);
+      }
+  
+      if (name === 'password') {
+        const isValidPassword = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/i.test(value);
+        setisPasswordValid(isValidPassword);
+      }
+  
+      if( name === 'username'){
+        const isValidUsername = /^[A-Za-z][A-Za-z0-9_]{7,15}$/i.test(value);
+  
+        setisUsernameValid(isValidUsername)
+        
+      }
+
+      if(name === "phone"){
+        const isValidPhone = /^(\+91[\-\s]?)?[0]?(91)?[789]\d{9}$/i.test(value)
+         setisPhoneValid(isValidPhone)
+      }
+
+
+    }
     const handleRegister = async (e)=>{
 
         e.preventDefault()
       
         const {username,email,password,phone} = userData
+
+
+
+        
       
-        if(!username || !email || !password ||!phone){
+        if(!username || !email || !password ||!phone ||  !isEmailValid ||
+          !isPasswordValid ||
+          !isUsernameValid || !isPhoneValid ){
           alert("Please fill the details")
         }else{
       
@@ -42,7 +83,9 @@ function Register({register}) {
       const handleLogin = async (e)=>{
         e.preventDefault()
       const {email,password} = userData
-        if(!email || !password){
+        if(!email || !password ||  !isEmailValid ||
+          !isPasswordValid ||
+          !isUsernameValid || !isPhoneValid ){
           alert("Please fill the details")
         }else{
       
@@ -82,23 +125,43 @@ function Register({register}) {
             <div className='d-flex flex-column w-75 p-3'>
            {isRegisterForm && <label className='mb-3 d-flex flex-column' >
                 Username 
-            <input  onChange={(e)=>setUserData({...userData,username:e.target.value})} value={userData.username} className='rounded form-control' type="text" placeholder='Username' />
+            <input  onChange={(e)=>handleChange(e)} name='username'  value={userData.username} className='rounded form-control' type="text" placeholder='Username' />
             </label>}
+            {!isUsernameValid && isRegisterForm &&
+              <div className='mb-3 text-danger'>
+              *Invalid username
+            </div>
+            }
+          
            <label className='mb-3 d-flex flex-column'>
             Email
-           <input required onChange={(e)=>setUserData({...userData,email:e.target.value})} value={userData.email} className='rounded form-control' type="email" placeholder='Email' />
-
+           <input required onChange={(e)=>handleChange(e)} name='email' value={userData.email} className='rounded form-control' type="email" placeholder='Email' />
+           {!isEmailValid &&
+              <div className='mb-3 text-danger'>
+              *Invalid Email
+            </div>
+            }
            </label>
            <label className='mb-3 d-flex flex-column'>
             Password
-           <input required minLength={5} pattern='[a-zA-Z0-9]*' onChange={(e)=>setUserData({...userData,password:e.target.value})} value={userData.password} className='rounded form-control' type="Password" placeholder='Password' />
+           <input required  name='password' onChange={(e)=>handleChange(e)} value={userData.password} className='rounded form-control' type="Password" placeholder='Password' />
 
            </label>
+           {!isPasswordValid &&
+              <div className='mb-3 text-danger'>
+              *Invalid Password
+            </div>
+            }
          {isRegisterForm &&  <label className='mb-3 d-flex flex-column'>
             Phone Number
-           <input required pattern='^[789]\d{9}$' minLength={10} onChange={(e)=>setUserData({...userData,phone:e.target.value})} value={userData.phone} className='rounded form-control' type="tel" placeholder='Phone' />
+           <input required  name='phone'  onChange={(e)=>handleChange(e)} value={userData.phone} className='rounded form-control' type="tel" placeholder='Phone' />
 
            </label>}
+           {!isPhoneValid && isRegisterForm &&
+              <div className='mb-3 text-danger'>
+              *Invalid Phone Number
+            </div>
+            }
           {isRegisterForm? <button type='submit' onClick={handleRegister} className='bg-dark rounded text-light p-2'>Signup</button>:<button type='submit' onClick={handleLogin} className='bg-dark rounded text-light p-2'>Login</button>}
            <div className='d-flex justify-content-between mt-2 align-items-center'>
            {isRegisterForm? <p>Already Registered? <span><Link to={'/login'}>Login</Link> </span></p>: <p>Don't have an account? <span><Link to={'/'}>Register</Link> </span></p>}
